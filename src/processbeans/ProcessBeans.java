@@ -180,7 +180,9 @@ public class ProcessBeans extends PApplet {
                 if (brackets.get(i).isPressed) {
                     seq = 3;
                     brackets.get(i).isPressed = false;
-                    brackets.get(i).isPlaying = true;
+                    if(brackets.get(i).position==1){
+                    brackets.get(i).isFirstPlayer = true;
+                    }
                 }
             }
         }
