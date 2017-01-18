@@ -64,11 +64,6 @@ public class ProcessBeans extends PApplet {
         textAlign(CENTER, CENTER);
         text("P1", pX, pY);
         text("P2", pX2, pY2);
-        for (int i = 0; i < brackets.size(); i++) {
-            if (brackets.get(i).position == 1 && brackets.get(i).isPlaying) {
-                println("both are playing");
-            }
-        }
         if (pX < 0) {
             pX = 0;
         }
@@ -420,10 +415,20 @@ public class ProcessBeans extends PApplet {
             }
 
             if (dist(bX, bY, nX1, nY + h / 2) < bD / 2 + (w) / 2) {
+                for(int i = 0; i < brackets.size(); i++){
+                    if(brackets.get(i).isSecondPlayer){
+                        brackets.get(i).points+=1;
+                    }
+                }
                 seq = 2;
                 //do win code
             }
             if (dist(bX, bY, nX2 + w / 2, nY + h / 2) < bD / 2 + (w) / 2) {
+                for(int i = 0; i < brackets.size(); i++){
+                    if(brackets.get(i).isFirstPlayer){
+                        brackets.get(i).points+=1;
+                    }
+                }
                 seq = 2;
                 //do win code
             }
@@ -433,7 +438,7 @@ public class ProcessBeans extends PApplet {
     public class bracket {
 
         float x, y, w, h;
-        boolean isPressed, isPlaying;
+        boolean isPressed, isPlaying, isFirstPlayer, isSecondPlayer;
         int position = 1;
         String t = "player";
         int points = 0;
@@ -447,6 +452,8 @@ public class ProcessBeans extends PApplet {
             t = T;
             position = P;
             isPlaying = false;
+            isFirstPlayer=false;
+            isSecondPlayer=false;
         }
 
         public void update() {
