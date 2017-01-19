@@ -178,18 +178,21 @@ public class ProcessBeans extends PApplet {
             if (brackets.get(i).points == 3) {
                 brackets.get(i).round += 1;
                 brackets.get(i).x += 100;
-                brackets.get(i).y += 25;
+                brackets.get(i).y += 25;//**********************************************************************************CHANGE DEPENDING ON POSITION
                 brackets.get(i).points = 0;
             }
-            if (brackets.get(i).position == 1) {
-                if (brackets.get(i).isPressed) {
-                    brackets.get(i).isFirstPlayer = true;
-                    seq = 3;
-                    brackets.get(i).isPressed = false;
-                    for (int j = 0; j < brackets.size(); j++) {
-                        if (brackets.get(j).position == 2) {
-                            brackets.get(j).isSecondPlayer = true;
+            for (int x = 0; x <= brackets.size(); x++) {
+                if (brackets.get(i).position == x) {
+                    if (brackets.get(i).isPressed) {
+                        brackets.get(i).isFirstPlayer = true;
+                        seq = 3;
+                        brackets.get(i).isPressed = false;
+                        for (int j = 0; j < brackets.size(); j++) {
+                            if (brackets.get(j).position == (x+1)) {
+                                brackets.get(j).isSecondPlayer = true;
+                            }
                         }
+
                     }
                 }
             }
@@ -453,6 +456,7 @@ public class ProcessBeans extends PApplet {
                 for (int i = 0; i < brackets.size(); i++) {
                     if (brackets.get(i).isSecondPlayer) {
                         brackets.get(i).points += 1;
+                        brackets.get(i).isSecondPlayer = false;
                     }
                 }
                 seq = 2;
@@ -462,6 +466,7 @@ public class ProcessBeans extends PApplet {
                 for (int i = 0; i < brackets.size(); i++) {
                     if (brackets.get(i).isFirstPlayer) {
                         brackets.get(i).points += 1;
+                        brackets.get(i).isFirstPlayer = false;
                     }
                 }
                 seq = 2;
@@ -490,6 +495,13 @@ public class ProcessBeans extends PApplet {
             isPlaying = false;
             isFirstPlayer = false;
             isSecondPlayer = false;
+            if (players == 2) {
+                boolean isFirstSet;
+            } else if (players == 4) {
+                boolean isFirstSet, isSecondSet;
+            } else if (players == 8) {
+                boolean isFirstSet, isSecondSet, isThirdSet, isFourthSet;
+            }
         }
 
         public void update() {
