@@ -169,6 +169,13 @@ public class ProcessBeans extends PApplet {
 
     public void secondSeq() {
         background(0);
+        fill(155);
+        rect(0,0,width/4,height);
+        rect(width/4,0,width/4,height);
+        rect(width/2,0,width/4,height);
+        rect(width/4*3,0,width/4,height);
+        fill(100);
+        rect(width/2-50,25,100,50);
         fill(255);
         textAlign(CENTER, CENTER);
         text("Round " + round + " start", width / 2, 50);
@@ -517,8 +524,7 @@ public class ProcessBeans extends PApplet {
             rect(x, y, w, h);
             fill(255);
             textAlign(CENTER, CENTER);
-            text(t, x + w / 2, y + h / 2);
-            text(points, x - 25, y + 15);
+            text(t+" : "+points, x + w / 2, y + h / 2);
         }
     }
 
