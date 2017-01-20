@@ -170,12 +170,12 @@ public class ProcessBeans extends PApplet {
     public void secondSeq() {
         background(0);
         fill(155);
-        rect(0,0,width/4,height);
-        rect(width/4,0,width/4,height);
-        rect(width/2,0,width/4,height);
-        rect(width/4*3,0,width/4,height);
+        rect(0, 0, width / 4, height);
+        rect(width / 4, 0, width / 4, height);
+        rect(width / 2, 0, width / 4, height);
+        rect(width / 4 * 3, 0, width / 4, height);
         fill(100);
-        rect(width/2-50,25,100,50);
+        rect(width / 2 - 50, 25, 100, 50);
         fill(255);
         textAlign(CENTER, CENTER);
         text("Round " + round + " start", width / 2, 50);
@@ -184,19 +184,35 @@ public class ProcessBeans extends PApplet {
             brackets.get(i).update();
             if (brackets.get(i).points == 3) {
                 brackets.get(i).round += 1;
-                brackets.get(i).x += 100;
+                brackets.get(i).x += 125;
                 brackets.get(i).y += 25;//**********************************************************************************CHANGE DEPENDING ON POSITION
                 brackets.get(i).points = 0;
             }
             for (int x = 0; x <= brackets.size(); x++) {
                 if (brackets.get(i).position == x) {
                     if (brackets.get(i).isPressed) {
-                        brackets.get(i).isFirstPlayer = true;
-                        seq = 3;
-                        brackets.get(i).isPressed = false;
-                        for (int j = 0; j < brackets.size(); j++) {
-                            if (brackets.get(j).position == (x+1)) {
-                                brackets.get(j).isSecondPlayer = true;
+                        if (round == 1) {
+                            if (brackets.get(i).position == 1 || brackets.get(i).position == 3 || brackets.get(i).position == 5 || brackets.get(i).position == 7) {
+                                brackets.get(i).isFirstPlayer = true;
+                                seq = 3;
+                                brackets.get(i).isPressed = false;
+                                for (int j = 0; j < brackets.size(); j++) {
+                                    if (brackets.get(j).position == (x + 1)) {
+                                        brackets.get(j).isSecondPlayer = true;
+                                    }
+
+                                }
+                            }
+                            if (brackets.get(i).position == 2 || brackets.get(i).position == 4 || brackets.get(i).position == 6 || brackets.get(i).position == 8) {
+                                brackets.get(i).isSecondPlayer = true;
+                                seq = 3;
+                                brackets.get(i).isPressed = false;
+                                for (int j = 0; j < brackets.size(); j++) {
+                                    if (brackets.get(j).position == (x - 1)) {
+                                        brackets.get(j).isFirstPlayer = true;
+                                    }
+
+                                }
                             }
                         }
 
@@ -211,9 +227,9 @@ public class ProcessBeans extends PApplet {
         button two_player = new button(50, 50, 100, 100, "Two Player");
         two_player.update();
         if (two_player.isPressed) {
-            bracket first_player = new bracket(50, 100, 100, 25, 1, "John");
+            bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
-            bracket second_player = new bracket(50, 150, 100, 25, 2, "Bradley");
+            bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
             brackets.add(second_player);
             players = 2;
             seq = 2;
@@ -221,13 +237,13 @@ public class ProcessBeans extends PApplet {
         button four_player = new button(200, 50, 100, 100, "Four Player");
         four_player.update();
         if (four_player.isPressed) {
-            bracket first_player = new bracket(50, 100, 100, 25, 1, "John");
+            bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
-            bracket second_player = new bracket(50, 150, 100, 25, 2, "Bradley");
+            bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
             brackets.add(second_player);
-            bracket third_player = new bracket(50, 200, 100, 25, 3, "Bohn");
+            bracket third_player = new bracket((float) 12.5, 200, 100, 25, 3, "Bohn");
             brackets.add(third_player);
-            bracket fourth_player = new bracket(50, 250, 100, 25, 4, "Dradley");
+            bracket fourth_player = new bracket((float) 12.5, 250, 100, 25, 4, "Dradley");
             brackets.add(fourth_player);
             players = 4;
             seq = 2;
@@ -235,21 +251,21 @@ public class ProcessBeans extends PApplet {
         button eight_player = new button(350, 50, 100, 100, "Eight Player");
         eight_player.update();
         if (eight_player.isPressed) {
-            bracket first_player = new bracket(50, 100, 100, 25, 1, "John");
+            bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
-            bracket second_player = new bracket(50, 150, 100, 25, 2, "Bradley");
+            bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
             brackets.add(second_player);
-            bracket third_player = new bracket(50, 200, 100, 25, 3, "Bohn");
+            bracket third_player = new bracket((float) 12.5, 200, 100, 25, 3, "Bohn");
             brackets.add(third_player);
-            bracket fourth_player = new bracket(50, 250, 100, 25, 4, "Dradley");
+            bracket fourth_player = new bracket((float) 12.5, 250, 100, 25, 4, "Dradley");
             brackets.add(fourth_player);
-            bracket fifth_player = new bracket(50, 300, 100, 25, 5, "Hunk");
+            bracket fifth_player = new bracket((float) 12.5, 300, 100, 25, 5, "Hunk");
             brackets.add(fifth_player);
-            bracket sixth_player = new bracket(50, 350, 100, 25, 6, "Splone");
+            bracket sixth_player = new bracket((float) 12.5, 350, 100, 25, 6, "Splone");
             brackets.add(sixth_player);
-            bracket seventh_player = new bracket(50, 400, 100, 25, 7, "Swaggy");
+            bracket seventh_player = new bracket((float) 12.5, 400, 100, 25, 7, "Swaggy");
             brackets.add(seventh_player);
-            bracket eighth_player = new bracket(50, 450, 100, 25, 8, "Sporty McGee");
+            bracket eighth_player = new bracket((float) 12.5, 450, 100, 25, 8, "Sporty McGee");
             brackets.add(eighth_player);
             players = 8;
             seq = 2;
@@ -524,7 +540,7 @@ public class ProcessBeans extends PApplet {
             rect(x, y, w, h);
             fill(255);
             textAlign(CENTER, CENTER);
-            text(t+" : "+points, x + w / 2, y + h / 2);
+            text(t + " : " + points, x + w / 2, y + h / 2);
         }
     }
 
