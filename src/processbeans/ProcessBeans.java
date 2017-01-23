@@ -15,6 +15,15 @@ public class ProcessBeans extends PApplet {
     public static void main(String[] args) {
         PApplet.main("processbeans.ProcessBeans");
     }
+    /*
+    seq: determines game sequence (start menu, bracket menu, game)
+    players: how many movements a player need to win
+    round: which verticle rows are playing
+    first[]: player 1 movement variables
+    second[]: player 2 movement variables
+    brackets[]: for holding brackets
+    s: the soccer game;
+    */
     int seq = 1;
     int players = 2;
     int round = 1;
@@ -187,6 +196,8 @@ public class ProcessBeans extends PApplet {
 
         for (int i = 0; i < brackets.size(); i++) {
             brackets.get(i).update();
+            brackets.get(i).isFirstPlayer = false;
+            brackets.get(i).isSecondPlayer = false;
             if (brackets.get(i).points == 3) {
                 brackets.get(i).round += 1;
                 brackets.get(i).x += 125;
@@ -260,7 +271,7 @@ public class ProcessBeans extends PApplet {
             brackets.add(first_player);
             bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
             brackets.add(second_player);
-            players = 2;
+            players = 1;
             seq = 2;
         }
         button four_player = new button(200, 50, 100, 100, "Four Player");
@@ -274,7 +285,7 @@ public class ProcessBeans extends PApplet {
             brackets.add(third_player);
             bracket fourth_player = new bracket((float) 12.5, 250, 100, 25, 4, "Dradley");
             brackets.add(fourth_player);
-            players = 4;
+            players = 2;
             seq = 2;
         }
         button eight_player = new button(350, 50, 100, 100, "Eight Player");
@@ -296,7 +307,7 @@ public class ProcessBeans extends PApplet {
             brackets.add(seventh_player);
             bracket eighth_player = new bracket((float) 12.5, 450, 100, 25, 8, "Sporticus");
             brackets.add(eighth_player);
-            players = 8;
+            players = 3;
             seq = 2;
 
         }
@@ -503,7 +514,7 @@ public class ProcessBeans extends PApplet {
             if (mY < 0) {
                 mY += 0.1;
             }
-
+            
             if (dist(bX, bY, nX1, nY + h / 2) < bD / 2 + (w) / 2) {
                 for (int i = 0; i < brackets.size(); i++) {
                     if (brackets.get(i).isSecondPlayer) {
