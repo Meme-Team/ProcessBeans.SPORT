@@ -168,6 +168,11 @@ public class ProcessBeans extends PApplet {
     }
 
     public void secondSeq() {
+        for (int m = 0; m < brackets.size(); m++)
+        {
+            brackets.get(m).isFirstPlayer=false;
+            brackets.get(m).isSecondPlayer=false;
+        }
         background(0);
         fill(155);
         rect(0, 0, width / 4, height);
@@ -283,13 +288,13 @@ public class ProcessBeans extends PApplet {
             brackets.add(third_player);
             bracket fourth_player = new bracket((float) 12.5, 250, 100, 25, 4, "Dradley");
             brackets.add(fourth_player);
-            bracket fifth_player = new bracket((float) 12.5, 300, 100, 25, 5, "Hunk");
+            bracket fifth_player = new bracket((float) 12.5, 300, 100, 25, 5, "Swaggy");
             brackets.add(fifth_player);
             bracket sixth_player = new bracket((float) 12.5, 350, 100, 25, 6, "Splone");
             brackets.add(sixth_player);
-            bracket seventh_player = new bracket((float) 12.5, 400, 100, 25, 7, "Swaggy");
+            bracket seventh_player = new bracket((float) 12.5, 400, 100, 25, 7, "Robbie");
             brackets.add(seventh_player);
-            bracket eighth_player = new bracket((float) 12.5, 450, 100, 25, 8, "Sporty McGee");
+            bracket eighth_player = new bracket((float) 12.5, 450, 100, 25, 8, "Sporticus");
             brackets.add(eighth_player);
             players = 8;
             seq = 2;
@@ -530,6 +535,7 @@ public class ProcessBeans extends PApplet {
         String t = "player";
         int points = 0;
         int round = 1;
+        boolean test=false;
 
         bracket(float X, float Y, float W, float H, int P, String T) {
             x = X;
@@ -561,7 +567,12 @@ public class ProcessBeans extends PApplet {
             rect(x, y, w, h);
             fill(255);
             textAlign(CENTER, CENTER);
-            text(t + " : " + points, x + w / 2, y + h / 2);
+            if (isPlaying)
+            {
+                text(t + " : " + points, x + w / 2, y + h / 2);
+            } else if (isPlaying==false) {
+                text(t + " lost.", x + w / 2, y + h / 2);
+            }
         }
     }
 
