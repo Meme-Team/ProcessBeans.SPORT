@@ -33,6 +33,8 @@ public class ProcessBeans extends PApplet {
     float pY, pX, pX2, pY2;
     PImage soccerField;
     PImage soccerBall;
+    PImage leftShoe;
+    PImage rightShoe;
     ArrayList<bracket> brackets = new ArrayList<bracket>();
     soccer s;
 
@@ -46,6 +48,8 @@ public class ProcessBeans extends PApplet {
         pY2 = height / 2;
         soccerField = loadImage("Soccerfield.png");
         soccerBall = loadImage("SoccerBall.png");
+        leftShoe = loadImage("P1Shoe.png");
+        rightShoe = loadImage("P2Shoe.png");
     }
 
     public void draw() {
@@ -71,8 +75,10 @@ public class ProcessBeans extends PApplet {
         rect(50, 50, width - 100, height - 100);
         s.update();
         fill(255);
-        ellipse(pX, pY, 50, 50);
-        ellipse(pX2, pY2, 50, 50);
+        image(leftShoe, pX - 25, pY - 25);
+        image(rightShoe, pX2 - 25, pY2 - 25);
+        //ellipse(pX, pY, 50, 50);
+        //ellipse(pX2, pY2, 50, 50);
         fill(0);
         textAlign(CENTER, CENTER);
         text("P1", pX, pY);
@@ -128,6 +134,7 @@ public class ProcessBeans extends PApplet {
     }
 
     public void keyPressed() {
+        //controls for first player
         if (key == 'a' || key == 'A') {
             first[0] = true;
         }
@@ -140,6 +147,7 @@ public class ProcessBeans extends PApplet {
         if (key == 'd' || key == 'D') {
             first[3] = true;
         }
+        //controls for second player
         if (keyCode == LEFT) {
             second[0] = true;
         }
@@ -182,22 +190,7 @@ public class ProcessBeans extends PApplet {
     }
 
     public void secondSeq() {
-        boolean af = true;
-        for (int m = 0; m < brackets.size(); m++) {
-            if (brackets.get(m).round == round) {
-                if (brackets.get(m).isPlaying == true) {
-                    af = false;
-                    break;
-                }
-            }
-        }
-        //checks if all players either lost
-        //or won | then starts next round
-        if (af) {
-            if (round < players) {
-                round += 1;
-            }
-        }
+
         background(0);
         fill(155);
         rect(0, 0, width / 4, height);
@@ -212,58 +205,63 @@ public class ProcessBeans extends PApplet {
 
         for (int i = 0; i < brackets.size(); i++) {
             brackets.get(i).update();
-            brackets.get(i).isFirstPlayer = false;
-            brackets.get(i).isSecondPlayer = false;
+                //brackets.get(i).isFirstPlayer = false;
+            //brackets.get(i).isSecondPlayer = false;
             if (brackets.get(i).points == 3) {
-                brackets.get(i).round += 1;
                 brackets.get(i).x += 125;
                 if (brackets.get(i).position == 1 || brackets.get(i).position == 3 || brackets.get(i).position == 5 || brackets.get(i).position == 7) {
-                    brackets.get(i).y += 25;
+
                     for (int j = 0; j < brackets.size(); j++) {
                         if (brackets.get(j).position == brackets.get(i).position + 1) {
-                            if (brackets.get(j).round != brackets.get(i).round) {
+                            if (brackets.get(j).round == brackets.get(i).round) {
                                 brackets.get(j).isPlaying = false;
                             }
                         }
                     }
-                        if (brackets.get(i).position == 3) {
-                            brackets.get(i).position = 2;
-                        }
-                        if (brackets.get(i).position == 5) {
-                            brackets.get(i).position = 3;
-                        }
-                        if (brackets.get(i).position == 7) {
-                            brackets.get(i).position = 4;
-                        }
-                    
+                    if (brackets.get(i).position == 1) {
+                    }
+                    if (brackets.get(i).position == 3) {
+                        brackets.get(i).position = 2;
+                    }
+                    if (brackets.get(i).position == 5) {
+                        brackets.get(i).position = 3;
+                    }
+                    if (brackets.get(i).position == 7) {
+                        brackets.get(i).position = 4;
+                    }
+                    brackets.get(i).round += 1;
+  
+
                 }
-                if (brackets.get(i).position == 2 || brackets.get(i).position == 4 || brackets.get(i).position == 6 || brackets.get(i).position == 8) {
+                else if (brackets.get(i).position == 2 || brackets.get(i).position == 4 || brackets.get(i).position == 6 || brackets.get(i).position == 8) {
                     brackets.get(i).y -= 25;
+
                     for (int j = 0; j < brackets.size(); j++) {
                         if (brackets.get(j).position == brackets.get(i).position - 1) {
-                            if (brackets.get(j).round != brackets.get(i).round) {
+                            if (brackets.get(j).round == brackets.get(i).round) {
                                 brackets.get(j).isPlaying = false;
                             }
                         }
                     }
-                        if (brackets.get(i).position == 2) {
-                            brackets.get(i).position = 1;
-                        }
-                        if (brackets.get(i).position == 4) {
-                            brackets.get(i).position = 2;
-                        }
-                        if (brackets.get(i).position == 6) {
-                            brackets.get(i).position = 3;
-                        }
-                        if (brackets.get(i).position == 8) {
-                            brackets.get(i).position = 4;
-                        }
+                    if (brackets.get(i).position == 2) {
+                        brackets.get(i).position = 1;
+                    }
+                    if (brackets.get(i).position == 4) {
+                        brackets.get(i).position = 2;
+                    }
+                    if (brackets.get(i).position == 6) {
+                        brackets.get(i).position = 3;
+                    }
+                    if (brackets.get(i).position == 8) {
+                        brackets.get(i).position = 4;
+                    }
+                    brackets.get(i).round += 1;
 
                 }
                 brackets.get(i).points = 0;
             }
 
-            //DEVIDER
+            //If a bracket is pressed
             for (int x = 0; x <= brackets.size(); x++) {
                 if (brackets.get(i).position == x) {
                     if (brackets.get(i).isPressed) {
@@ -286,7 +284,7 @@ public class ProcessBeans extends PApplet {
                                 for (int j = 0; j < brackets.size(); j++) {
                                     if (brackets.get(j).position == (x - 1)) {
                                         brackets.get(j).isFirstPlayer = true;
-                                        
+
                                     }
 
                                 }
@@ -294,6 +292,23 @@ public class ProcessBeans extends PApplet {
                         }
                     }
                 }
+            }
+
+        }
+        boolean af = true;
+        for (int m = 0; m < brackets.size(); m++) {
+            if (brackets.get(m).round == round) {
+                if (brackets.get(m).isPlaying == true) {
+                    af = false;
+                    break;
+                }
+            }
+        }
+        //checks if all players either lost
+        //or won | then starts next round
+        if (af) {
+            if (round < players) {
+                round += 1;
             }
         }
     }
@@ -372,7 +387,7 @@ public class ProcessBeans extends PApplet {
         public void update() {
             fill(255);
             image(soccerField, 0, 0);
-            image(soccerBall, bX-12, bY-12);
+            image(soccerBall, bX - 12, bY - 12);
             bX += mX;
             bY += mY;
 
@@ -544,6 +559,9 @@ public class ProcessBeans extends PApplet {
                         brackets.get(i).points += 1;
                         brackets.get(i).isSecondPlayer = false;
                     }
+                    if (brackets.get(i).isFirstPlayer) {
+                        brackets.get(i).isFirstPlayer = false;
+                    }
                 }
                 seq = 2;
                 //do win code
@@ -553,6 +571,9 @@ public class ProcessBeans extends PApplet {
                     if (brackets.get(i).isFirstPlayer) {
                         brackets.get(i).points += 1;
                         brackets.get(i).isFirstPlayer = false;
+                    }
+                    if (brackets.get(i).isSecondPlayer) {
+                        brackets.get(i).isSecondPlayer = false;
                     }
                 }
                 seq = 2;
