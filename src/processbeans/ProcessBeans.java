@@ -689,5 +689,4 @@ public class ProcessBeans extends PApplet {
             text(t, x + w / 2, y + h / 2);
         }
     }
-
 }
