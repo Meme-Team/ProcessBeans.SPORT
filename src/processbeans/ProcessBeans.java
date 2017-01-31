@@ -218,6 +218,7 @@ public class ProcessBeans extends PApplet {
                 round=3;
                 removePlayers();        
                 win=false;
+                removePlayers();
                 seq=1;
                 
             }
@@ -338,6 +339,7 @@ public class ProcessBeans extends PApplet {
         two_player.update();
         if (two_player.isPressed) {
             round = 1;
+            removePlayers();
             bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
             bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
@@ -349,6 +351,7 @@ public class ProcessBeans extends PApplet {
         four_player.update();
         if (four_player.isPressed) {
             round = 1;
+            removePlayers();
             bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
             bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
@@ -364,6 +367,7 @@ public class ProcessBeans extends PApplet {
         eight_player.update();
         if (eight_player.isPressed) {
             round = 1;
+            removePlayers();
             bracket first_player = new bracket((float) 12.5, 100, 100, 25, 1, "John");
             brackets.add(first_player);
             bracket second_player = new bracket((float) 12.5, 150, 100, 25, 2, "Bradley");
