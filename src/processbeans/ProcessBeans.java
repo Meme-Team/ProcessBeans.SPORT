@@ -413,6 +413,8 @@ public class ProcessBeans extends PApplet {
         public void update() {
             fill(255);
             image(soccerField, 0, 0);
+            ellipse(nX1+w, nY+h/2, 50, 50);
+            ellipse(nX2, nY+h/2, 50, 50);
             image(soccerBall, bX - 12, bY - 12);
             bX += mX;
             bY += mY;
@@ -579,7 +581,7 @@ public class ProcessBeans extends PApplet {
                 mY += 0.1;
             }
 
-            if (dist(bX, bY, nX1, nY + h / 2) < bD / 2 + (w) / 2) {
+            if (dist(bX, bY, nX1 + w, nY + h / 2) < bD / 2 + (w) / 2) {
                 for (int i = 0; i < brackets.size(); i++) {
                     if (brackets.get(i).isSecondPlayer) {
                         brackets.get(i).points += 1;
@@ -592,7 +594,7 @@ public class ProcessBeans extends PApplet {
                 seq = 2;
                 //do win code
             }
-            if (dist(bX, bY, nX2 + w / 2, nY + h / 2) < bD / 2 + (w) / 2) {
+            if (dist(bX, bY, nX2, nY + h / 2) < bD / 2 + (w) / 2) {
                 for (int i = 0; i < brackets.size(); i++) {
                     if (brackets.get(i).isFirstPlayer) {
                         brackets.get(i).points += 1;
