@@ -1,29 +1,44 @@
 package processbeans;
 
+//Importing necessary packages.
 import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
- *
- * @author behac6513
+ * This application is a soccer game with a built in bracket system that updates
+ * as you play the game
+ * <p>
+ * Contributors:
+ * <p>
+ * Developers: Bennett Hack, Chris Hitchcock
+ * <p>
+ * Graphics Designer: Nicholas Epp
  */
 public class ProcessBeans extends PApplet {
 
     /**
+     * Initializing Processing in the program.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         PApplet.main("processbeans.ProcessBeans");
     }
     /*
-     seq: determines game sequence (start menu, bracket menu, game)
-     players: how many movements a player need to win
-     round: which verticle rows are playing
-     first[]: player 1 movement variables
-     second[]: player 2 movement variables
-     brackets[]: for holding brackets
-     s: the soccer game;
+     * seq: determines game sequence (start menu, bracket menu, game)
+     * players: how many movements a player need to win
+     * round: which verticle rows are playing
+     * first[]: player 1 movement variables
+     * second[]: player 2 movement variables
+     * win: determines if the game is over
+     * pY, pX, pX2, pY2: positions of the players
+     * soccerField: image of the soccerfield
+     * soccerBall: image of the soccerball
+     * leftShoe: image of the first shoe
+     * rightShoe: image of the second shoe
+     * brackets[]: for holding brackets
+     * s: the soccer game;
      */
     int seq = 1;
     int players = 2;
@@ -39,12 +54,17 @@ public class ProcessBeans extends PApplet {
     ArrayList<bracket> brackets = new ArrayList<bracket>();
     soccer s;
 
+    /**
+     * Settings method; used to set up the Processing window.
+     */
     public void settings() {
         size(500, 500);
     }
 
+    /**
+     * Sets default Y positions of players and loads images.
+     */
     public void setup() {
-        //size(500, 500);
         pY = height / 2;
         pY2 = height / 2;
         soccerField = loadImage("Soccerfield.png");
@@ -53,6 +73,9 @@ public class ProcessBeans extends PApplet {
         rightShoe = loadImage("P2Shoe.png");
     }
 
+    /**
+     * Draw method; sets up the three sequences based on seq variable.
+     */
     public void draw() {
         if (seq == 1) {
             firstSeq();
@@ -70,7 +93,13 @@ public class ProcessBeans extends PApplet {
         }
     }
 
+    /**
+     * This sequence is where the soccer game is played; it deals with setting
+     * up the soccer field and players, as well as the movement of the players
+     * and the boundaries (making it so they cannot leave the window).
+     */
     public void thirdSeq() {
+        //Variable creation/field setup
         background(0);
         fill(0, 200, 0);
         rect(50, 50, width - 100, height - 100);
@@ -78,12 +107,12 @@ public class ProcessBeans extends PApplet {
         fill(255);
         image(leftShoe, pX - 25, pY - 25);
         image(rightShoe, pX2 - 25, pY2 - 25);
-        //ellipse(pX, pY, 50, 50);
-        //ellipse(pX2, pY2, 50, 50);
         fill(0);
         textAlign(CENTER, CENTER);
         text("P1", pX, pY);
         text("P2", pX2, pY2);
+
+        //Window boundaries
         if (pX < 0) {
             pX = 0;
         }
@@ -108,6 +137,8 @@ public class ProcessBeans extends PApplet {
         if (pY2 > height) {
             pY2 = height;
         }
+
+        //Player 1 movement
         if (first[0]) {
             pX -= 5;
         }
@@ -120,6 +151,7 @@ public class ProcessBeans extends PApplet {
         if (first[3]) {
             pX += 5;
         }
+        //Player 2 movement
         if (second[0]) {
             pX2 -= 5;
         }
@@ -134,8 +166,12 @@ public class ProcessBeans extends PApplet {
         }
     }
 
+    /**
+     * This method sets the first[#]/second[#] booleans to true when the
+     * WASD/Arrow Keys are pressed.
+     */
     public void keyPressed() {
-        //controls for first player
+        //Controls for Player 1
         if (key == 'a' || key == 'A') {
             first[0] = true;
         }
@@ -148,7 +184,7 @@ public class ProcessBeans extends PApplet {
         if (key == 'd' || key == 'D') {
             first[3] = true;
         }
-        //controls for second player
+        //Controls for Player 2
         if (keyCode == LEFT) {
             second[0] = true;
         }
@@ -163,7 +199,12 @@ public class ProcessBeans extends PApplet {
         }
     }
 
+    /**
+     * This method is the opposite of the above; it sets the booleans to false
+     * when WASD/Arrow Keys are released.
+     */
     public void keyReleased() {
+        //Set Player 1 booleans to false upon release
         if (key == 'a' || key == 'A') {
             first[0] = false;
         }
@@ -176,6 +217,7 @@ public class ProcessBeans extends PApplet {
         if (key == 'd' || key == 'D') {
             first[3] = false;
         }
+        //Set Player 2 booleans to false upon release
         if (keyCode == LEFT) {
             second[0] = false;
         }
@@ -189,13 +231,23 @@ public class ProcessBeans extends PApplet {
             second[3] = false;
         }
     }
+
+    /**
+     * This method removes all the brackets that are present; used when you
+     * reset the game.
+     */
     public void removePlayers() {
-        for(int i = 0; i < brackets.size();i++){
+        for (int i = 0; i < brackets.size(); i++) {
             brackets.remove(brackets.get(i));
         }
     }
-    public void secondSeq() {
 
+    /**
+     * This sequence is where the brackets are displayed and updated when one
+     * player wins a match.
+     */
+    public void secondSeq() {
+        //Setting up the sequence (static parts)
         background(0);
         fill(155);
         rect(0, 0, width / 4, height);
@@ -207,37 +259,43 @@ public class ProcessBeans extends PApplet {
         fill(255);
         textAlign(CENTER, CENTER);
         text("Round " + round + " start", width / 2, 50);
-        if(win){
-            button b = new button(width-100,height-25,100,25,"Restart");
+
+        //Reset button that appears when a player wins.
+        if (win) {
+            button b = new button(width - 100, height - 25, 100, 25, "Restart");
             b.update();
-            if(b.isPressed){
-                round=1;
+            if (b.isPressed) {
+                round = 1;
                 removePlayers();
-                round=2;
+                round = 2;
                 removePlayers();
-                round=3;
-                removePlayers();        
-                win=false;
+                round = 3;
                 removePlayers();
-                seq=1;
-                
+                win = false;
+                removePlayers();
+                seq = 1;
+
             }
         }
+        //Display all the brackets.
         for (int i = 0; i < brackets.size(); i++) {
             brackets.get(i).update();
-                //brackets.get(i).isFirstPlayer = false;
-            //brackets.get(i).isSecondPlayer = false;
-            if (brackets.get(i).points == 3) {
-                brackets.get(i).x += 125;
-                if (brackets.get(i).position == 1 || brackets.get(i).position == 3 || brackets.get(i).position == 5 || brackets.get(i).position == 7) {
 
+            //Update the brackets when one player wins the Best-of-3 series
+            if (brackets.get(i).points == 3) {
+                //Update X position
+                brackets.get(i).x += 125;
+                //Updates the first players (odd numbered brackets)
+                if (brackets.get(i).position == 1 || brackets.get(i).position == 3 || brackets.get(i).position == 5 || brackets.get(i).position == 7) {
                     for (int j = 0; j < brackets.size(); j++) {
                         if (brackets.get(j).position == brackets.get(i).position + 1) {
+                            //When a player wins, disable their opponent's bracket
                             if (brackets.get(j).round == brackets.get(i).round) {
                                 brackets.get(j).isPlaying = false;
                             }
                         }
                     }
+                    //When a player wins, update their position for next round.
                     if (brackets.get(i).position == 1) {
                     }
                     if (brackets.get(i).position == 3) {
@@ -249,20 +307,22 @@ public class ProcessBeans extends PApplet {
                     if (brackets.get(i).position == 7) {
                         brackets.get(i).position = 4;
                     }
+                    //Send the winner to the next round.
                     brackets.get(i).round += 1;
-  
 
-                }
-                else if (brackets.get(i).position == 2 || brackets.get(i).position == 4 || brackets.get(i).position == 6 || brackets.get(i).position == 8) {
-                    
-
+                   
+                } else 
+                    //Update the second players (even numbered brackets)
+                    if (brackets.get(i).position == 2 || brackets.get(i).position == 4 || brackets.get(i).position == 6 || brackets.get(i).position == 8) {
                     for (int j = 0; j < brackets.size(); j++) {
                         if (brackets.get(j).position == brackets.get(i).position - 1) {
+                            //When a player wins, disable their opponent's bracket
                             if (brackets.get(j).round == brackets.get(i).round) {
                                 brackets.get(j).isPlaying = false;
                             }
                         }
                     }
+                    //When a player wins, update their position for next round.
                     if (brackets.get(i).position == 2) {
                         brackets.get(i).position = 1;
                     }
@@ -275,9 +335,10 @@ public class ProcessBeans extends PApplet {
                     if (brackets.get(i).position == 8) {
                         brackets.get(i).position = 4;
                     }
+                    //Send the winner to the next round
                     brackets.get(i).round += 1;
-
                 }
+                //Reset the players' when a series ends
                 brackets.get(i).points = 0;
             }
 
@@ -413,8 +474,8 @@ public class ProcessBeans extends PApplet {
         public void update() {
             fill(255);
             image(soccerField, 0, 0);
-            ellipse(nX1+w, nY+h/2, 50, 50);
-            ellipse(nX2, nY+h/2, 50, 50);
+            ellipse(nX1 + w, nY + h / 2, 50, 50);
+            ellipse(nX2, nY + h / 2, 50, 50);
             image(soccerBall, bX - 12, bY - 12);
             bX += mX;
             bY += mY;
@@ -652,12 +713,12 @@ public class ProcessBeans extends PApplet {
             fill(255);
             textAlign(CENTER, CENTER);
             if (isPlaying) {
-                if(round <= players){
-                text(t + " : " + points, x + w / 2, y + h / 2);
+                if (round <= players) {
+                    text(t + " : " + points, x + w / 2, y + h / 2);
                 }
-                if(round > players){
-                text(t + " won!", x + w / 2, y + h / 2);
-                win=true;
+                if (round > players) {
+                    text(t + " won!", x + w / 2, y + h / 2);
+                    win = true;
                 }
             } else if (isPlaying == false) {
                 text(t + " lost.", x + w / 2, y + h / 2);
